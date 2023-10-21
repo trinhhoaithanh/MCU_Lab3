@@ -1,17 +1,13 @@
-02:04:22 **** Incremental Build of configuration Debug for project MCU_Lab3 ****
+02:40:26 **** Incremental Build of configuration Debug for project MCU_Lab3 ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:101:56: warning: comparison between 'GPIO_PinState' {aka 'enum <anonymous>'} and 'enum <anonymous>' [-Wenum-compare]
-  101 |    if(HAL_GPIO_ReadPin(Button1_GPIO_Port, Button1_Pin) == RESET){
-      |                                                        ^~
+arm-none-eabi-gcc "../Core/Src/button.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/button.d" -MT"Core/Src/button.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/button.o"
 arm-none-eabi-gcc -o "MCU_Lab3.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\Hoai Thanh\Documents\VXK-VDK\MCU_Lab3\MCU_Lab3\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MCU_Lab3.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: MCU_Lab3.elf
  
 arm-none-eabi-size   MCU_Lab3.elf 
 arm-none-eabi-objdump -h -S  MCU_Lab3.elf  > "MCU_Lab3.list"
    text	   data	    bss	    dec	    hex	filename
-   4736	     20	   1572	   6328	   18b8	MCU_Lab3.elf
+   7296	     40	   1648	   8984	   2318	MCU_Lab3.elf
 arm-none-eabi-objcopy  -O ihex  MCU_Lab3.elf  "MCU_Lab3.hex"
 Finished building: default.size.stdout
 arm-none-eabi-objcopy  -O binary  MCU_Lab3.elf  "MCU_Lab3.bin"
@@ -23,5 +19,5 @@ Finished building: MCU_Lab3.bin
  
  
 
-02:04:24 Build Finished. 0 errors, 1 warnings. (took 2s.529ms)
+02:40:29 Build Finished. 0 errors, 0 warnings. (took 2s.536ms)
 
