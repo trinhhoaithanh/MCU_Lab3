@@ -1,53 +1,47 @@
-/*
- * button.c
- *
- *  Created on: Oct 22, 2023
- *      Author: Hoai Thanh
- */
-
-
 #include "button.h"
-
-
 int KeyReg0 = NORMAL_STATE;
 int KeyReg1 = NORMAL_STATE;
 int KeyReg2 = NORMAL_STATE;
-
-//Xử lý nhân đề
 int KeyReg3 = NORMAL_STATE;
-int TimerForKeyPress = 200; //đè 2 giây mới xử lý
+
+int TimeOutForKeyPress =  500;
+int button1_flag = 0;
+
+int isButton1Pressed(){
+	if(button1_flag == 1){
+		button1_flag = 0;
+		return 1;
+	}
+	return 0;
+}
 
 void subKeyProcess(){
-	HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+	//TODO
+	//HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+	button1_flag = 1;
 }
 
 void getKeyInput(){
-	KeyReg0 = KeyReg1;
-	KeyReg1 = KeyReg2;
-	KeyReg2 = HAL_GPIO_ReadPin(Button1_GPIO_Port,Button1_Pin);
+  KeyReg2 = KeyReg1;
+  KeyReg1 = KeyReg0;
+  //Add your button here
+  KeyReg0 = HAL_GPIO_ReadPin(Button1_GPIO_Port, Button1_Pin);
 
-	if((KeyReg0 == KeyReg1) && (KeyReg1 == KeyReg2)){
-		if(KeyReg3 != KeyReg2){
-//			KeyReg2 là đang ổn định KeyReg3 là trạng thái ổn định trước đó
-//			Nếu khác thì cập nhật trạng thái ổn định
-			KeyReg3 = KeyReg2;
+  if ((KeyReg1 == KeyReg0) && (KeyReg1 == KeyReg2)){
+    if (KeyReg2 != KeyReg3){
+      KeyReg3 = KeyReg2;
 
-			if(KeyReg2 == PRESSED_STATE){
-//				TODO
-				subKeyProcess();
-				TimerForKeyPress = 200;
-
-			}
-		}
-		else{
-//			Nhấn đè
-			TimerForKeyPress--;
-			if(TimerForKeyPress == 0){
-//				Hết thời gian nhân đè => xử lý todo
-				KeyReg3 = NORMAL_STATE;
-
-			}
-
-		}
-	}
+      if (KeyReg3 == PRESSED_STATE){
+        TimeOutForKeyPress = 500;
+        subKeyProcess();
+      }
+    }else{
+       TimeOutForKeyPress --;
+        if (TimeOutForKeyPress == 0){
+        	TimeOutForKeyPress = 500;
+			subKeyProcess();
+        }
+    }
+  }
 }
+
